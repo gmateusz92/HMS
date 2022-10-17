@@ -1,1 +1,14 @@
-{{ room_list }}
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for room in room_list %}}
+<li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'room_detail_view' room.pk %}">{{ room.category }}</a>
+        </li>
+<li>{{ room.beds }}</li>
+
+{{ room.category }}
+{% endfor %}
+
+{% endblock %}

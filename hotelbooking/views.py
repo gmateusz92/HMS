@@ -1,9 +1,17 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, FormView
 from .models import Room, Booking
 from .forms import AvalilabilityForm
 from hotelbooking.booking_funkctions.availibility import check_availability
 from django.http import HttpResponse
+
+def home(request):
+    return render(request, 'home.html')
+
+def room_detail_view(request, room_pk):
+    room_detail = get_object_or_404(Room, pk=room_pk) #mozna dawać room_pk albo room_id
+    context = {'room_detail': room_detail}
+    return render(request, 'room_detail.html', context)
 
 class RoomList(ListView):
     model = Room
@@ -28,7 +36,7 @@ class BookingView(FormView):
         if len(available_rooms)>0: #jezeli jest cos na liscie czyli lista jest > 0
             room = available_rooms[0]# dla pierwszego z listy wolnego pokoju towrzymy rezerwacje
             booking = Booking.objects.create(
-                user = request.user,
+                user = self.request.user,
                 room = room,
                 check_in = data['check_in'],
                 check_out = data['check_out']
