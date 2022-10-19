@@ -2,4 +2,45 @@
 
 {% block content %}
 
+<div class="container text-center">
+<p><h1> Room detail:</h1></p>
+
+<li>{{ room_detail.category }}</li>
+<li>{{ room_detail.number }}</li>
+<li>{{ room_detail.beds }}</li>
+
+
+
+
+    <form id="booking-form" action="" method="POST">
+
+          <div class="input-div">
+               <label for="check_in">Check In:</label>
+               <label type="datetime-local id="check_in" name="check_in">
+          </div>
+
+          <div class="input-div">
+               <label for="check_in">Check In:</label>
+               <label type="datetime-local" id="check_in" name="check_in">
+          </div>
+
+          <div class="input-div">
+               <button type="submit"> Book the Room </button>
+          </div>
+     </form>
+
+
+
+<form id="booking-form" action="" method="POST">
+  <div class="form-group">
+    <label for="check_in">Check in:</label>
+    <input type="datetime-local" class="form-control" id="check_in">
+  </div>
+  <div class="form-group">
+    <label for="check_out">Check out:</label>
+    <input type="datetime-local" class="form-control" id="check_out" >
+  </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Book the room</button>
+</form>
 {% endblock %}
