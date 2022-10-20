@@ -10,13 +10,13 @@
 <li>{{ room_detail.beds }}</li>
 
 
-
+<li>{{ room_category }}</li>
 
     <form id="booking-form" action="" method="POST">
 
           <div class="input-div">
                <label for="check_in">Check In:</label>
-               <label type="datetime-local id="check_in" name="check_in">
+               <label type="datetime-local" id="check_in" name="check_in">
           </div>
 
           <div class="input-div">
@@ -32,13 +32,14 @@
 
 
 <form id="booking-form" action="" method="POST">
+
   <div class="form-group">
     <label for="check_in">Check in:</label>
-    <input type="datetime-local" class="form-control" id="check_in">
+    <input type="datetime-local" class="form-control" id="check_in" name="check_in">
   </div>
   <div class="form-group">
     <label for="check_out">Check out:</label>
-    <input type="datetime-local" class="form-control" id="check_out" >
+    <input type="datetime-local" class="form-control" id="check_out" name="check_out">
   </div>
   </div>
   <button type="submit" class="btn btn-primary">Book the room</button>

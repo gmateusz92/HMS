@@ -2,15 +2,18 @@
 
 {% block content %}
 
-{% for room in room_list %}}
-<li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{% url 'hotelbooking:room_detail_view' room.pk %}">{{ room.category }}</a>
-        </li>
-<li>{{ room.beds }}</li>
 
-{{ room.category }}
 
-{{ room }}
+{% for room_category, room_url in room_list %}
+
+
+<a href="{{ room_url }}">{{ room_category }} </a>
+
+
+<li>{{ room }}</li>
+<li>{{ room.room_category }}</li>
+<li>{{ room}}</li>
+
 {% endfor %}
 
 {% endblock %}
