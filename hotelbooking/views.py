@@ -26,6 +26,7 @@ def RoomListView(request):
         room_list.append((room, room_url))
     context = {
         'room_list': room_list,
+        'room': room,
     }
     return render(request, 'room_list.html', context)
 
