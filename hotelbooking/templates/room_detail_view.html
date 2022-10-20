@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container text-center">
+<p><h1> Room detail:</h1></p>
+
+
+<li>{{ room_category }}</li>
+
+
+
+
+    <form id="booking-form" action="" method="POST">
+
+        {% csrf_token %}
+          <div class="input-div">
+               <label for="id_check_in">Check In:</label>
+               <label type="datetime-local" id="id_check_in" name="check_in">
+          </div>
+
+          <div class="input-div">
+               <label for="id_check_out">Check In:</label>
+               <label type="datetime-local" id="id_check_out" name="check_in">
+          </div>
+
+          <div class="input-div">
+               <button type="submit"> Book the Room </button>
+          </div>
+     </form>
+
+
+
+
+<h2>Django Form</h2>
+<form action="" method="POST">
+
+    <input type="hidden" name="csrfmiddlewaretoken" value="Rw9N1PqWjgLT3kT5pKIokX4d359oufmaJizuBvYcAjFpIczkt4NFEleXtTZuhMsw">
+    <p>
+  </p>
+    {% csrf_token %}
+  <p>
+    <label for="id_check_in">Check in:</label>
+    <input type="date" name="check_in" required id="id_check_in">
+  </p>
+
+  <p>
+    <label for="id_check_out">Check out:</label>
+    <input type="date" name="check_out" required id="id_check_out">
+  </p>
+
+<button type="submit"> Book room</button>
+
+</form>
+
+
+
+{% endblock %}
