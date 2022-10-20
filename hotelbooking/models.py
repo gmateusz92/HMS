@@ -25,4 +25,4 @@ class Booking(models.Model):
     check_out = models.DateTimeField(null=True)
 
     def __str__(self):
-        return f'{self.user} has booked {self.room} from {self.check_in}'
+        return f'{self.user} has booked {self.room} from {self.check_in} to {self.check_out}'

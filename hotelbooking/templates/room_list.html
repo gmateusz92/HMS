@@ -1,1 +1,19 @@
-{{ room_list }}
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+{% for room_category, room_url in room_list %}
+
+
+<a href="{{ room_url }}">{{ room_category }} </a>
+
+
+<li>{{ room.number }}</li>
+<li>{{ room.room_category }}</li>
+<li>{{ room}}</li>
+
+{% endfor %}
+
+{% endblock %}
