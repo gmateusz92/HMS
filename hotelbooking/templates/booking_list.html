@@ -1,9 +1,37 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<h1>Your bookings</h1>
+<h2>Welcome dear {{ user }}</h2>
 
 {% for booking in booking_list %}
-<h1>{{ booking }}</h1>
-{% endfor %}
+<h2>{{ booking }}</h2>
 
+
+<div class="category">
+
+
+<h2>{{ booking.get_room_category }}</h2>
+</div>
+
+<div class="from">
+    <h2>From: {{ booking.check_in }}</h2>
+</div>
+<div class="to">
+    <h2> To: {{ booking.check_out }}</h2>
+</div>
+<div class="beds">
+    <h2> Beds: {{ booking.room.beds }}</h2>
+</div>
+<div class="capacity">
+    <h2> Capacity: {{ booking.room.capacity }}</h2>
+</div>
+
+ <form id="booking-form" action="{% url 'hotelbooking:CancelBookingView' booking.id %}" method="POST">
+     {% csrf_token %}
+<div class="input-div">
+    <button type="submit">Cancel the Booking</button>
+</div>
+ </form>
+{% endfor %}
 {% endblock %}

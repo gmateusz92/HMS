@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="container text-center">
-<p><h1> Room detail:</h1></p>
+<p><h1> Room detailxxx:</h1></p>
 
 <li>{{ room_detail.category }}</li>
 <li>{{ room_detail.number }}</li>
@@ -32,7 +32,7 @@
 
 
 <form id="booking-form" action="" method="POST">
-
+{% csrf_token %}
   <div class="form-group">
     <label for="check_in">Check in:</label>
     <input type="datetime-local" class="form-control" id="check_in" name="check_in">

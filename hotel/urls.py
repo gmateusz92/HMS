@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('hotelbooking.urls')),
     path('accounts/', include('allauth.urls')),
+    path('', include('django_event_cal.urls')),
 ]
