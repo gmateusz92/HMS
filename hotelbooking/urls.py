@@ -12,6 +12,7 @@ urlpatterns = [
     path('booking_list/', BookingList.as_view(), name='BookingList'),
     #path('book/', BookingView.as_view(), name='BookingView'),
     path('room/<category>', RoomDetailView.as_view(), name='RoomDetailView'),
-    path('booking/cancel/<pk>', CancelBookingView.as_view(), name='CancelBookingView')
-
+    path('booking/cancel/<pk>', CancelBookingView.as_view(), name='CancelBookingView'),
+    #path("<int:year>/<str:month>/", views.home, name="home"),
+path('calendar/', views.CalendarView.as_view(), name='calendar'),
 ]

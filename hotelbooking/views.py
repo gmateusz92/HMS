@@ -6,14 +6,17 @@ from hotelbooking.booking_funkctions.availibility import check_availability
 from django.http import HttpResponse
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
-
-
+from django_event_cal.functions import cal_context
+from datetime import datetime, date
+from django.utils.safestring import mark_safe
+from .models import *
+from .utils import Calendar
 
 def home(request):
-    # context = {}
-    # context = cal_context(context)
-    # return render(request, 'home.html', context)
-    return render(request, 'home.html')
+     # context = {}
+     # context = cal_context(context, year, month, True)
+     # return render(request, 'home.html', context)
+     return render(request, 'home.html')
 
 def room_detail_view(request, room_pk):
     room_detail = get_object_or_404(Room, pk=room_pk) #mozna dawać room_pk albo room_id
@@ -183,3 +186,27 @@ class CancelBookingView(DeleteView):
 #             return HttpResponse(booking)
 #         else:
 #             return HttpResponse('this category of rooms are booked')
+
+class CalendarView(ListView):
+    model = Booking
+    template_name = 'calendar.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # use today's date for the calendar
+        d = get_date(self.request.GET.get('day', None))
+
+        # Instantiate our calendar class with today's year and date
+        cal = Calendar(d.year, d.month)
+
+        # Call the formatmonth method, which returns our calendar as a table
+        html_cal = cal.formatmonth(withyear=True)
+        context['calendar'] = mark_safe(html_cal)
+        return context
+
+def get_date(req_day):
+        if req_day:
+            year, month = (int(x) for x in req_day.split('-'))
+            return date(year, month, day=1)
+        return datetime.today()
