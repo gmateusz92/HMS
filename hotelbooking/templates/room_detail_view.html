@@ -20,15 +20,15 @@
     {% csrf_token %}
   <p>
     <label for="id_check_in">Check in:</label>
-    <input type="date" name="check_in" required id="id_check_in">
+    <input type="datetime-local" name="check_in" required id="id_check_in">
   </p>
 
   <p>
     <label for="id_check_out">Check out:</label>
-    <input type="date" name="check_out" required id="id_check_out">
+    <input type="datetime-local" name="check_out" required id="id_check_out">
   </p>
 
-<button type="submit"> Book room</button>
+<button type="submit" class="btn btn-primary">Book room</button>
 
 </form>
 
