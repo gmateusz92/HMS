@@ -9,7 +9,7 @@ from django.http import HttpResponse
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django_event_cal.functions import cal_context
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 from django.utils.safestring import mark_safe
 from .models import *
 from .utils import Calendar
@@ -179,6 +179,31 @@ class CancelBookingView(DeleteView):
 #         else:
 #             return HttpResponse('this category of rooms are booked')
 
+# class CalendarView(ListView):
+#     model = Booking
+#     template_name = 'calendar.html'
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+
+#         # use today's date for the calendar
+#         d = get_date(self.request.GET.get('day', None))
+
+#         # Instantiate our calendar class with today's year and date
+#         cal = Calendar(d.year, d.month)
+
+#         # Call the formatmonth method, which returns our calendar as a table
+#         html_cal = cal.formatmonth(withyear=True)
+#         context['calendar'] = mark_safe(html_cal)
+#         return context
+
+def get_date(req_day):
+        if req_day:
+            year, month = (int(x) for x in req_day.split('-'))
+            return date(year, month, day=1)
+        return datetime.today()
+
+
 class CalendarView(ListView):
     model = Booking
     template_name = 'calendar.html'
@@ -186,19 +211,29 @@ class CalendarView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        # use today's date for the calendar
+        # Pobieramy obiekt daty na podstawie parametru 'day' z żądania
         d = get_date(self.request.GET.get('day', None))
 
+        # Ustalamy aktualny rok i miesiąc
+        year, month = d.year, d.month
+
+        # Przechodzimy do poprzedniego miesiąca
+        prev_month = date(year, month, 1) - timedelta(days=1)
+        prev_month_url = reverse('hotelbooking:calendar') + f'?day={prev_month.year}-{prev_month.month}'
+
+        # Przechodzimy do następnego miesiąca
+        next_month = date(year, month, 28) + timedelta(days=7)
+        next_month_url = reverse('hotelbooking:calendar') + f'?day={next_month.year}-{next_month.month}'
+
         # Instantiate our calendar class with today's year and date
-        cal = Calendar(d.year, d.month)
+        cal = Calendar(year, month)
 
         # Call the formatmonth method, which returns our calendar as a table
         html_cal = cal.formatmonth(withyear=True)
         context['calendar'] = mark_safe(html_cal)
-        return context
 
-def get_date(req_day):
-        if req_day:
-            year, month = (int(x) for x in req_day.split('-'))
-            return date(year, month, day=1)
-        return datetime.today()
+        # Dodajemy dane nawigacyjne do kontekstu
+        context['prev_month_url'] = prev_month_url
+        context['next_month_url'] = next_month_url
+
+        return context

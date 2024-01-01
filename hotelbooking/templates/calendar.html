@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
-{% load static %}
-<link rel="stylesheet" href="{% static 'style.css' %}">
+
+{% block title %}Django Calendar{% endblock %}
+
 {% block content %}
-<link rel="stylesheet" href="{% static 'style.css' %}">
-{{ calendar }}
+    {{ calendar }}
 
-
+    <div class="text-center mt-3">
+        <a href="{{ prev_month_url }}" class="btn btn-primary">Poprzedni miesiąc</a>
+        <a href="{{ next_month_url }}" class="btn btn-primary">Następny miesiąc</a>
+    </div
 {% endblock %}

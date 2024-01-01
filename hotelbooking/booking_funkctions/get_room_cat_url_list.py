@@ -15,3 +15,5 @@ def get_room_cat_url_list():
         room_url = reverse('hotelbooking:RoomDetailView', kwargs={'category': category})
         room_cat_url_list.append((room_category, room_url))
     return room_cat_url_list
+
+#gotowa lista par (nazwa kategorii, URL): [('AC', '/room/detail/AC/'),

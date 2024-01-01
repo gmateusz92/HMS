@@ -1,37 +1,36 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Your bookings</h1>
-<h2>Welcome dear {{ user }}</h2>
+  <h1>Your bookings</h1>
+  <h2>Welcome dear {{ user }}</h2>
 
-{% for booking in booking_list %}
-<h2>{{ booking }}</h2>
-
-
-<div class="category">
-
-
-<h2>{{ booking.get_room_category }}</h2>
-</div>
-
-<div class="from">
-    <h2>From: {{ booking.check_in }}</h2>
-</div>
-<div class="to">
-    <h2> To: {{ booking.check_out }}</h2>
-</div>
-<div class="beds">
-    <h2> Beds: {{ booking.room.beds }}</h2>
-</div>
-<div class="capacity">
-    <h2> Capacity: {{ booking.room.capacity }}</h2>
-</div>
-
- <form id="booking-form" action="{% url 'hotelbooking:CancelBookingView' booking.id %}" method="POST">
-     {% csrf_token %}
-<div class="input-div">
-    <button type="submit">Cancel the Booking</button>
-</div>
- </form>
-{% endfor %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Room Category</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Beds</th>
+        <th>Capacity</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for booking in booking_list %}
+      <tr>
+        <td>{{ booking.get_room_category }}</td>
+        <td>{{ booking.check_in }}</td>
+        <td>{{ booking.check_out }}</td>
+        <td>{{ booking.room.beds }}</td>
+        <td>{{ booking.room.capacity }}</td>
+        <td>
+          <form id="booking-form" action="{% url 'hotelbooking:CancelBookingView' booking.id %}" method="POST">
+            {% csrf_token %}
+            <button class="btn btn-danger" type="submit">Cancel Booking</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% endblock %}

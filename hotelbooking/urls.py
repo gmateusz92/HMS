@@ -1,5 +1,5 @@
 from django.urls import path
-from. views import RoomListView, BookingList, RoomDetailView, CancelBookingView #BookingView
+from. views import RoomListView, BookingList, RoomDetailView, CancelBookingView, CalendarView #BookingView,
 
 from . import views
 app_name = 'hotelbooking'
@@ -7,7 +7,6 @@ app_name = 'hotelbooking'
 urlpatterns = [
     path('', views.home, name='home'),
     path('success/', views.success, name='success'),
-    #path('room_list/', RoomListView.as_view(), name='RoomList'),
     path('room_list/', views.RoomListView, name='RoomList'),
     #path('<int:room_pk>/', views.room_detail_view, name='room_detail_view'),
     path('booking_list/', BookingList.as_view(), name='BookingList'),
@@ -15,5 +14,6 @@ urlpatterns = [
     path('room/<category>', RoomDetailView.as_view(), name='RoomDetailView'),
     path('booking/cancel/<pk>', CancelBookingView.as_view(), name='CancelBookingView'),
     #path("<int:year>/<str:month>/", views.home, name="home"),
-path('calendar/', views.CalendarView.as_view(), name='calendar'),
+    path('calendar/', CalendarView.as_view(), name='calendar'),
+    path('calendar/<int:room_id>/', views.CalendarView.as_view(), name='calendar'),
 ]

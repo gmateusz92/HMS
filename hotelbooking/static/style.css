@@ -36,3 +36,9 @@ ul {
 a {
   color: #17a2b8;
 }
+
+.reserved {
+  background-color: red; /* lub inny kolor oznaczający rezerwację */
+  color: white; /* opcjonalnie, aby tekst był czytelny na tle koloru */
+}
+
