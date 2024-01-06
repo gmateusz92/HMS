@@ -18,7 +18,34 @@ def home(request):
      # context = {}
      # context = cal_context(context, year, month, True)
      # return render(request, 'home.html', context)
-     return render(request, 'home.html')
+    d = get_date(request.GET.get('day', None))
+
+    # Ustal aktualny rok i miesiąc
+    year, month = d.year, d.month
+
+    # Przechodź do poprzedniego miesiąca
+    prev_month = date(year, month, 1) - timedelta(days=1)
+    prev_month_url = reverse('hotelbooking:home') + f'?day={prev_month.year}-{prev_month.month}'
+
+    # Przechodź do następnego miesiąca
+    next_month = date(year, month, 28) + timedelta(days=7)
+    next_month_url = reverse('hotelbooking:home') + f'?day={next_month.year}-{next_month.month}'
+
+    # Instantiate our calendar class with today's year and date
+    cal = Calendar(year, month)
+
+    # Call the formatmonth method, which returns our calendar as a table
+    html_cal = cal.formatmonth(withyear=True)
+
+    # Dodaj dane nawigacyjne do kontekstu
+    context = {
+        'calendar_html': mark_safe(html_cal),
+        'prev_month_url': prev_month_url,
+        'next_month_url': next_month_url,
+    }
+
+    return render(request, 'home.html', context)
+    
 
 def success(request):
 
@@ -62,6 +89,27 @@ class BookingList(ListView): #wyswietla rezerwacje uzytkowników
 
 
 class RoomDetailView(View): #tworzymy do zrezerwacji z formularzy POST Get
+
+    def get_calendar_data(self, category):
+        d = get_date(self.request.GET.get('day', None))
+        year, month = d.year, d.month
+
+        prev_month = date(year, month, 1) - timedelta(days=1)
+        prev_month_url = reverse('hotelbooking:room_detail', kwargs={'category': category}) + f'?day={prev_month.year}-{prev_month.month}'
+
+        next_month = date(year, month, 28) + timedelta(days=7)
+        next_month_url = reverse('hotelbooking:room_detail', kwargs={'category': category}) + f'?day={next_month.year}-{next_month.month}'
+
+        
+        cal = Calendar(year, month)
+        html_cal = cal.formatmonth(withyear=True)
+
+        return {
+            'calendar': mark_safe(html_cal),
+            'prev_month_url': prev_month_url,
+            'next_month_url': next_month_url,
+        }
+
     def get(self, request, *args, **kwargs):
         category = self.kwargs.get('category', None) #dlaczego kwargs
         form = AvalilabilityForm()
@@ -74,6 +122,9 @@ class RoomDetailView(View): #tworzymy do zrezerwacji z formularzy POST Get
                 'room_category': room.category,
                 'form': AvalilabilityForm,
             }
+            
+            context.update(self.get_calendar_data(category))
+
             return render(request, 'room_detail_view.html', context)
         else:
             return HttpResponse('Category does not exist')
@@ -106,7 +157,8 @@ class RoomDetailView(View): #tworzymy do zrezerwacji z formularzy POST Get
         else:
             return HttpResponse('this category of rooms are booked')
 
-
+    
+    
 
 # class RoomDetailView(View): #tworzymy do zrezerwacji z formularzy POST Get
 #     def get(self, request, *args, **kwargs):

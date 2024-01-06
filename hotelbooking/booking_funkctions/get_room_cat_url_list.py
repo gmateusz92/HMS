@@ -12,7 +12,7 @@ def get_room_cat_url_list():
 
     for category in room_categories:
         room_category = room_categories.get(category) #room_category=value, category=key
-        room_url = reverse('hotelbooking:RoomDetailView', kwargs={'category': category})
+        room_url = reverse('hotelbooking:room_detail', kwargs={'category': category})
         room_cat_url_list.append((room_category, room_url))
     return room_cat_url_list
 

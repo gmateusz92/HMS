@@ -30,8 +30,14 @@
 
 <button type="submit" class="btn btn-primary">Book room</button>
 
+ 
 </form>
 
+{{ calendar }}
 
+<div class="text-center mt-3">
+    <a href="{{ prev_month_url }}" class="btn btn-primary">Poprzedni miesiąc</a>
+    <a href="{{ next_month_url }}" class="btn btn-primary">Następny miesiąc</a>
+</div
 
 {% endblock %}
